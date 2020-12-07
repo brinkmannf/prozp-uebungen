@@ -26,7 +26,7 @@
 
 void sieb(int *prim, int size);
 
-void printSieb(int *prim, int size);
+void ausgabe(int *prim, int size);
 
 int main() {
     strich(50, '-');
@@ -50,7 +50,7 @@ int main() {
         if (primArray != NULL) {
             sieb(primArray, size);
             primArray = primArrayStart;
-            printSieb(primArray, size);
+            ausgabe(primArray, size);
         } else {
             printf("Es konnte kein Speicherplatz reserviert werden!\n");
             return 0;
@@ -68,13 +68,13 @@ int main() {
     return 0;
 }
 
-void printSieb(int *prim, int size) {
+void ausgabe(int *prim, int size) {
     int anzahl = 1;
     for (int i = 0; i < size; ++i) {
-        if ((anzahl % 10) == 0 && prim[i] == 1) {
+        if ((anzahl % 10) == NICHT_PRIM && prim[i] == PRIM) {
             printf("%d,\n", i);
             anzahl++;
-        } else if (prim[i] == 1) {
+        } else if (prim[i] == PRIM) {
             printf("%d, ", i);
             anzahl++;
         }
@@ -85,18 +85,18 @@ void printSieb(int *prim, int size) {
 void sieb(int *prim, int arrSize) {
     int max = sqrt(arrSize);
     for (int i = 0; i < arrSize; i++) {
-        if (i == 0 || i == 1) {
-            prim[i] = 0;
+        if (i == NICHT_PRIM || i == PRIM) {
+            prim[i] = NICHT_PRIM;
         } else {
-            prim[i] = 1;
+            prim[i] = PRIM;
         }
     }
     for (int i = 2; i < max; ++i) {
-        if (prim[i] == 1) {
+        if (prim[i] == PRIM) {
             for (int j = 2; j < arrSize; ++j) {
                 int mult = i * j;
                 if (mult <= arrSize) {
-                    prim[mult] = 0;
+                    prim[mult] = NICHT_PRIM;
                 }
             }
         }
